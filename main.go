@@ -17,8 +17,8 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Name = %s\n", name)
 	fmt.Fprintf(w, "Address = %s", address)
 }
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/hello" {
+func thankshandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/thanks" {
 		http.Error(w, "404 not found", http.StatusNotFound)
 		return
 	}
@@ -26,14 +26,15 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method is not supported ", http.StatusNotFound)
 		return
 	}
-	fmt.Fprintf(w, "hello!")
+	fmt.Fprintf(w, "This website is Developed By MR. Arvind Kumar rana!")
+	fmt.Fprintf(w, "Web Server is written by Shoib Ansari")
 }
 
 func main() {
-	fileServer := http.FileServer(http.Dir("./static"))
+	fileServer := http.FileServer(http.Dir("."))
 	http.Handle("/", fileServer)
-	http.HandleFunc("/form", formHandler)
-	http.HandleFunc("/hello", helloHandler)
+	// http.HandleFunc("/form", formHandler)
+	http.HandleFunc("/thanks", thankshandler)
 	fmt.Printf("Starting server at 8080 \n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal(err)
